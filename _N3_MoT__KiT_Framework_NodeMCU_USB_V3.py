@@ -6,6 +6,7 @@ import struct
 import socket
 from time import localtime, strftime
 import os
+import numpy as np # To work with csv file (array)
 
 # Configura a serial
 # para COM# o número que se coloca é n-1 no primeiro parâmetrso. Ex COM9  valor 8
@@ -31,7 +32,7 @@ Arquivo_temporário_RSSI = "N4_Temp_RSSI.txt"
 Arquivo_temporário_Luminosidade = "N4_Temp_luminosidade.txt"
 
 print ("Arquivo de log: %s" % Arquivo_log_Luminosidade_RSSI)
-N4_Log_dados = open(Arquivo_log_Luminosidade_RSSI, 'w')
+N4_Log_dados = open(Arquivo_log_Luminosidade_RSSI, 'w') # mode=r for writing on file
 
 # Cria o vetor Pacote
 PacoteDL = {}
@@ -44,25 +45,31 @@ for i in range(52): # faz um array com 52 bytes
    PacoteDL[i] = 0
    PacoteUL[i] = 0
 
+print(type(PacoteDL)) # To check the Pacote type (IT RETURNED AS <dict> DICTIONARY)
+
 #inicializa variáveis auxiliares
 Numero_medidas = 1000000 # Realiza 1 milhão de medidas
 
 try:
    # ============ Camada Física - Transmite o pacote        
-   for j in range(1,Numero_medidas):
+   for j in range(1,Numero_medidas): # Similar to for in C, range(start, stop, step)
      
    # ============= Comandos e valores para serem enviados para o nó sensor
 
-      arquivo = open('._N4_Comandos_N3_para_N1.txt', 'r') # leitura do arquivo comandos_oficina.txt que estão nas linhas
-      PacoteDL[34] = int(arquivo.readline())  # Tempo de pisca dos LEDs na PK2 sendo vermelho quando chega pacote e verde quando transmite pacote
-      PacoteDL[37] = int(arquivo.readline())  # Acende ou apaga LED amarelo
+      arquivo = open('._N4_Comandos_N3_para_N1.csv', 'r') # leitura do arquivo comandos_oficina.txt que estão nas linhas
+      #np.loadtxt(arquivo, skiprows=1)
+      LEDs = np.genfromtxt(arquivo, header=True)
+      PacoteDL[34] = int(LEDs[0])
+      PacoteDL[37] = int(LEDs[1])
+      #PacoteDL[34] = int(arquivo.readline())  # Tempo de pisca dos LEDs na PK2 sendo vermelho quando chega pacote e verde quando transmite pacote
+      #PacoteDL[37] = int(arquivo.readline())  # Acende ou apaga LED amarelo
       arquivo.close()
       
 # ============= TRANSMITE O PACOTE            
                   
       for k in range(52): # transmite pacote
          Pacote_DL_Byte = chr(PacoteDL[k])
-         ser.write(Pacote_DL_Byte.encode('latin1'))         
+         ser.write(Pacote_DL_Byte.encode('latin1')) # If no specified, UTF-8 is used. Should it be 'latin-1' instead?       
       
       # Aguarda a resposta do sensor
       time.sleep(0.5)
