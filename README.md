@@ -9,9 +9,23 @@ Repositório criado de acordo com o aprendido em [git](https://github.com/Rafael
 
 Arquivo Read-me foi criado depois.
 
-Para a Branch de trabalho em cima do arquivo N$ eu:
+Para a Branch de trabalho em cima do arquivo N4 eu:
 
 ![image](https://github.com/Rafaelatff/framework-TpM-v1/assets/58916022/35729ebd-83b1-4867-b185-96ab35673dea)
+
+## Instalando Python na máquina
+
+Primeiro vamos instalar o Python. 
+
+No terminal: ```python3```, it will open the Microsoft Store. Or download it directly from [Python website](https://www.python.org/downloads/).
+Durint installation, is **REALLY IMPORTANT to tick the option 'Add python.exe to PATH'**.
+
+Agora vamos instalar os Pacotes.
+
+* NumPy: no terminal digite: ```pip3 install numpy```.
+* Matplotlib: no terminal digite: ```pip3 install matplotlib```.
+* Pandas: no terminal digite: ```pip3 install pandas```.
+* Serial: no terminal digite: ```pip3 install pyserial```.
 
 ## Pacote MoT
 

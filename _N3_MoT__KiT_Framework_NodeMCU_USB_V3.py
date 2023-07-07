@@ -6,7 +6,7 @@ import struct
 import socket
 from time import localtime, strftime
 import os
-import numpy as np # To work with csv file (array)
+import pandas as pd # To work with csv file with different types
 
 # Configura a serial
 # para COM# o número que se coloca é n-1 no primeiro parâmetrso. Ex COM9  valor 8
@@ -56,14 +56,18 @@ try:
      
    # ============= Comandos e valores para serem enviados para o nó sensor
 
-      arquivo = open('._N4_Comandos_N3_para_N1.csv', 'r') # leitura do arquivo comandos_oficina.txt que estão nas linhas
-      #np.loadtxt(arquivo, skiprows=1)
-      LEDs = np.genfromtxt(arquivo, header=True)
-      PacoteDL[34] = int(LEDs[0])
-      PacoteDL[37] = int(LEDs[1])
+        # Trabalhando com csv
+      arquivo_csv = pd.read_csv('._N4_Comandos_N3_para_N1.csv',index_col=0)
+     
+      PacoteDL[34] = int(arquivo_csv.loc[:,["Tempo_LED_vermelho-in_verde-out"]])
+      PacoteDL[37] = int(arquivo_csv.loc[:,["LED_amarelo"]])
+
+         # Trabalhando com txt
+      #arquivo = open('._N4_Comandos_N3_para_N1.txt', 'r') # leitura do arquivo comandos_oficina.txt que estão nas linhas
+      #np.loadtxt(arquivo)
       #PacoteDL[34] = int(arquivo.readline())  # Tempo de pisca dos LEDs na PK2 sendo vermelho quando chega pacote e verde quando transmite pacote
       #PacoteDL[37] = int(arquivo.readline())  # Acende ou apaga LED amarelo
-      arquivo.close()
+      #arquivo.close()
       
 # ============= TRANSMITE O PACOTE            
                   
