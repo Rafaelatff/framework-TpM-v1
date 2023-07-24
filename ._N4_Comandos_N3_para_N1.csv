@@ -1,4 +1,2 @@
-Primeiro valor: Tempo pisca LED (vermelho recebe, verde transmite). Segundo valor: status do LED amarelo
-100
-0
-
+Tempo_ms_vermelho_recebe_verde_transmite,Status_LED_amarelo
+100,1

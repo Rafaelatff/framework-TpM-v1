@@ -13,9 +13,9 @@ import pandas as pd # To work with csv file with different types
 n_serial = input("Digite o número da serial = ") #seta a serial
 n_serial1 = int(n_serial) - 1
 ser = serial.Serial("COM"+str(n_serial), 115200, timeout=0.5,parity=serial.PARITY_NONE) # serial Windows
-
 ser.reset_input_buffer()
 ser.reset_output_buffer()
+
 #============= Arquivos da dados
 #apaga os arquivos temporários que foram gerados na rodada de testes anteriores
 if os.path.exists("N4_Temp_RSSI.txt"):
@@ -57,7 +57,7 @@ try:
    # ============= Comandos e valores para serem enviados para o nó sensor
 
         # Trabalhando com csv
-      arquivo_csv = pd.read_csv('._N4_Comandos_N3_para_N1.csv',index_col=0)
+      arquivo_csv = pd.read_csv('._N4_Comandos_N3_para_N1.csv',index_col=1)
      
       PacoteDL[34] = int(arquivo_csv.loc[:,["Tempo_LED_vermelho-in_verde-out"]])
       PacoteDL[37] = int(arquivo_csv.loc[:,["LED_amarelo"]])
